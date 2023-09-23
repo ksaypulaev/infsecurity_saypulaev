@@ -8,9 +8,9 @@ key = Fernet.generate_key()
 
 # Синхронное шифрование сообщения
 key_fernet_object = Fernet(key)
-encrypted_message = Fernet.encrypt(key_fernet_object, message)
+encrypted_message = key_fernet_object.encrypt(key_fernet_object, message)
 print(encrypted_message)
 
 # Синхронное дешифрование сообщения
-decrypted_message = Fernet.decrypt(key_fernet_object, encrypted_message)
+decrypted_message = key_fernet_object.decrypt(key_fernet_object, encrypted_message)
 print(decrypted_message)
