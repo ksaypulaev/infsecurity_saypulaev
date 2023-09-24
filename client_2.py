@@ -5,8 +5,14 @@ import sys
 from cryptography.fernet import Fernet
 
 
-HEADER_LENGTH = 10
+key_path = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/key.key'
+private_key_path_1 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/private_key1.key'
+public_key_path_1 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/public_key1.key'
 
+private_key_path_2 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/private_key2.key'
+public_key_path_2 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/public_key2.key'
+
+HEADER_LENGTH = 10
 IP = "127.0.0.1"
 PORT = 1234
 my_username = input("Username: ")
@@ -28,14 +34,25 @@ username = my_username.encode('utf-8')
 username_header = f"{len(username):<{HEADER_LENGTH}}".encode('utf-8')
 client_socket.send(username_header + username)
 
-key_path_1 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/key1.key'
+key_path = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/key.key'
 private_key_path_1 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/private_key1.key'
 public_key_path_1 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/public_key1.key'
 
+private_key_path_2 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/private_key2.key'
+public_key_path_2 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/public_key2.key'
+
+# генерация пары ключей и запись в файлы для асинхронного шифрования
+private_key = Fernet.generate_key()
+with open(private_key_path_2, "wb") as key_file:
+    key_file.write(private_key)
+public_key = Fernet.generate_key()
+with open(public_key_path_2, "wb") as key_file:
+    key_file.write(public_key)
+
 # чтение ключей из файлов
-with open(key_path_1, "rb") as key_file:
+with open(key_path, "rb") as key_file:
     key = key_file.read()
-with open(private_key_path_1, "rb") as key_file:
+with open(private_key_path_2, "rb") as key_file:
     private_key = key_file.read()
 with open(public_key_path_1, "rb") as key_file:
     public_key = key_file.read()
@@ -85,7 +102,7 @@ while True:
 
             message_length = int(message_header.decode('utf-8').strip())
             encrypted_message = client_socket.recv(message_length).decode('utf-8')
-                   
+
             # Синхронное дешифрование сообщения
             decrypted_message = key_fernet_object.decrypt(encrypted_message)
             decrypted_message_decoded = decrypted_message.decode('utf-8')

@@ -5,8 +5,14 @@ import sys
 from cryptography.fernet import Fernet
 
 
-HEADER_LENGTH = 10
+key_path = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/key.key'
+private_key_path_1 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/private_key1.key'
+public_key_path_1 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/public_key1.key'
 
+private_key_path_2 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/private_key2.key'
+public_key_path_2 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/public_key2.key'
+
+HEADER_LENGTH = 10
 IP = "127.0.0.1"
 PORT = 1234
 my_username = input("Username: ")
@@ -28,13 +34,9 @@ username = my_username.encode('utf-8')
 username_header = f"{len(username):<{HEADER_LENGTH}}".encode('utf-8')
 client_socket.send(username_header + username)
 
-key_path_1 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/key1.key'
-private_key_path_1 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/private_key1.key'
-public_key_path_1 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/public_key1.key'
-
 # генерация ключа и запись в файл для синхронного шифрования
 key = Fernet.generate_key()
-with open(key_path_1, "wb") as key_file:
+with open(key_path, "wb") as key_file:
     key_file.write(key)
 
 # генерация пары ключей и запись в файлы для асинхронного шифрования
@@ -46,11 +48,11 @@ with open(public_key_path_1, "wb") as key_file:
     key_file.write(public_key)
 
 # чтение ключей из файлов
-with open(key_path_1, "rb") as key_file:
+with open(key_path, "rb") as key_file:
     key = key_file.read()
 with open(private_key_path_1, "rb") as key_file:
     private_key = key_file.read()
-with open(public_key_path_1, "rb") as key_file:
+with open(public_key_path_2, "rb") as key_file:
     public_key = key_file.read()
 
 print(f'Key: {key}')
