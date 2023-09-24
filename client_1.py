@@ -72,7 +72,7 @@ while True:
         encrypted_message = key_fernet_object.encrypt(message)
         print(encrypted_message)
 
-        message_header = f"{len(message):<{HEADER_LENGTH}}".encode('utf-8')
+        message_header = f"{len(encrypted_message):<{HEADER_LENGTH}}".encode('utf-8')
         client_socket.send(message_header + encrypted_message)
 
     try:
@@ -101,11 +101,11 @@ while True:
 
             # Синхронное дешифрование сообщения
             decrypted_message = key_fernet_object.decrypt(encrypted_message)
-            #decrypted_message_decoded = decrypted_message.decode('utf-8')
-            print(decrypted_message)
+            decrypted_message_decoded = decrypted_message.decode('utf-8')
+            print(decrypted_message_decoded)
 
             # Print message
-            print(f'{username} : {decrypted_message}')
+            print(f'{username} : {decrypted_message_decoded}')
 
     except IOError as e:
         # This is normal on non blocking connections - when there are no incoming data error is going to be raised
