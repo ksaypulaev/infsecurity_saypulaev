@@ -95,16 +95,17 @@ while True:
 
             # Now do the same for message (as we received username, we received whole message, there's no need to check if it has any length)
             message_header = client_socket.recv(HEADER_LENGTH)
+
             message_length = int(message_header.decode('utf-8').strip())
             encrypted_message = client_socket.recv(message_length).decode('utf-8')
-                   
+
             # Синхронное дешифрование сообщения
             decrypted_message = key_fernet_object.decrypt(encrypted_message)
-            decrypted_message_decoded = decrypted_message.decode('utf-8')
-            print(decrypted_message_decoded)
+            #decrypted_message_decoded = decrypted_message.decode('utf-8')
+            print(decrypted_message)
 
             # Print message
-            print(f'{username} : {decrypted_message_decoded}')
+            print(f'{username} : {decrypted_message}')
 
     except IOError as e:
         # This is normal on non blocking connections - when there are no incoming data error is going to be raised
