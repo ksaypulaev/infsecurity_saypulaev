@@ -70,16 +70,10 @@ while True:
         # Синхронное шифрование сообщения
         key_fernet_object = Fernet(key)
         encrypted_message = key_fernet_object.encrypt(message)
-
         print(encrypted_message)
 
         message_header = f"{len(message):<{HEADER_LENGTH}}".encode('utf-8')
         client_socket.send(message_header + encrypted_message)
-
-        # Синхронное дешифрование сообщения
-        decrypted_message = key_fernet_object.decrypt(encrypted_message)
-        decrypted_message_decoded = decrypted_message.decode('utf-8')
-        print(decrypted_message_decoded)
 
     try:
         # Now we want to loop over received messages (there might be more than one) and print them
@@ -102,7 +96,12 @@ while True:
             # Now do the same for message (as we received username, we received whole message, there's no need to check if it has any length)
             message_header = client_socket.recv(HEADER_LENGTH)
             message_length = int(message_header.decode('utf-8').strip())
-            message = client_socket.recv(message_length).decode('utf-8')
+            encrypted_message = client_socket.recv(message_length).decode('utf-8')
+                   
+            # Синхронное дешифрование сообщения
+            decrypted_message = key_fernet_object.decrypt(encrypted_message)
+            decrypted_message_decoded = decrypted_message.decode('utf-8')
+            print(decrypted_message_decoded)
 
             # Print message
             print(f'{username} : {decrypted_message_decoded}')

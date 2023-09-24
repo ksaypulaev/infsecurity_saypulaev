@@ -32,30 +32,17 @@ key_path_1 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/k
 private_key_path_1 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/private_key1.key'
 public_key_path_1 = '/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/public_key1.key'
 
-'''# генерация ключа и запись в файл для синхронного шифрования
-key = Fernet.generate_key()
-with open(key_path_1, "wb") as key_file:
-    key_file.write(key)
-
-# генерация пары ключей и запись в файлы для асинхронного шифрования
-private_key = Fernet.generate_key()
-with open(private_key_path_1, "wb") as key_file:
-    key_file.write(private_key)
-public_key = Fernet.generate_key()
-with open(public_key_path_1, "wb") as key_file:
-    key_file.write(public_key)'''
-
 # чтение ключей из файлов
 with open(key_path_1, "rb") as key_file:
     key = key_file.read()
-'''with open(private_key_path_1, "rb") as key_file:
+with open(private_key_path_1, "rb") as key_file:
     private_key = key_file.read()
 with open(public_key_path_1, "rb") as key_file:
     public_key = key_file.read()
 
 print(f'Key: {key}')
 print(f'Private key: {private_key}')
-print(f'Public key: {public_key}')'''
+print(f'Public key: {public_key}')
 
 while True:
 
@@ -70,16 +57,10 @@ while True:
         # Синхронное шифрование сообщения
         key_fernet_object = Fernet(key)
         encrypted_message = key_fernet_object.encrypt(message)
-
         print(encrypted_message)
 
         message_header = f"{len(message):<{HEADER_LENGTH}}".encode('utf-8')
         client_socket.send(message_header + encrypted_message)
-
-        # Синхронное дешифрование сообщения
-        decrypted_message = key_fernet_object.decrypt(encrypted_message)
-        decrypted_message_decoded = decrypted_message.decode('utf-8')
-        print(decrypted_message_decoded)
 
     try:
         # Now we want to loop over received messages (there might be more than one) and print them
@@ -102,7 +83,12 @@ while True:
             # Now do the same for message (as we received username, we received whole message, there's no need to check if it has any length)
             message_header = client_socket.recv(HEADER_LENGTH)
             message_length = int(message_header.decode('utf-8').strip())
-            message = client_socket.recv(message_length).decode('utf-8')
+            encrypted_message = client_socket.recv(message_length).decode('utf-8')
+                   
+            # Синхронное дешифрование сообщения
+            decrypted_message = key_fernet_object.decrypt(encrypted_message)
+            decrypted_message_decoded = decrypted_message.decode('utf-8')
+            print(decrypted_message_decoded)
 
             # Print message
             print(f'{username} : {decrypted_message_decoded}')
