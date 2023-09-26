@@ -1,16 +1,38 @@
 from cryptography.fernet import Fernet
 import rsa
 from rsa import PrivateKey, PublicKey
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives import serialization
 
 
 class Encryption:
+
+    def key_pair_gen(self):
+        private_key = rsa.generate_private_key(
+            public_exponent=65537,
+            key_size=2048,
+        )
+        # Serialize the private key
+        private_pem = private_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.TraditionalOpenSSL,
+            encryption_algorithm=serialization.NoEncryption()
+        )
+        # Serialize the public key
+        public_key = private_key.public_key()
+        public_pem = public_key.public_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo
+        )
+        print(private_pem, public_pem)
+        return private_pem, public_pem
+    
     def __init__(self):
         self.key = b''
-        self.fernet_key = Fernet(self.key)
-
-        self.public_key = rsa.newkeys(1024)
-        self.private_key = rsa.newkeys(1024)
+        #self.fernet_key = Fernet(self.key)
         self.public_key_another = None
+        self.key_pair_gen()
+
 
     def encrypt(self, message: bytes) -> bytes:
         return self.fernet_key.encrypt(message)
@@ -41,4 +63,4 @@ class Encryption:
     def do_asym_encrypt_of_message(self, text: bytes) -> bytes:
         return self.do_asym_encrypt(text, self.public_key_another)
     
-enc = Encryption
+enc = Encryption()
