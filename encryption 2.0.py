@@ -7,10 +7,11 @@ from cryptography.hazmat.primitives import serialization
 
 class Encryption:
 
+    # Генерация пары ключей
     def key_pair_gen(self):
         private_key = rsa.generate_private_key(
             public_exponent=65537,
-            key_size=2048,
+            key_size=1024,
         )
         # Serialize the private key
         private_pem = private_key.private_bytes(
@@ -28,17 +29,18 @@ class Encryption:
         return private_pem, public_pem
     
     def __init__(self):
-        self.key = b''
+        self.key = b'LYCLog-4JekRS3ssP4OVNT104eIRwiEDBMMrdjv4mg0='
         #self.fernet_key = Fernet(self.key)
         self.public_key_another = None
         self.key_pair_gen()
 
-
-    def encrypt(self, message: bytes) -> bytes:
+    # Симметричное шифрование - дешифрование
+    def symm_encrypt(self, message: bytes) -> bytes:
         return self.fernet_key.encrypt(message)
-
-    def decrypt(self, ciphertext: bytes) -> bytes:
+    def symm_decrypt(self, ciphertext: bytes) -> bytes:
         return self.fernet_key.decrypt(ciphertext)
+    
+
 
     def do_asym_encrypt(self, message: bytes, public_key: PublicKey) -> bytes:
         return rsa.encrypt(message, public_key)
