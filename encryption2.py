@@ -25,7 +25,7 @@ class Encryption:
             encoding=serialization.Encoding.PEM,
             format=serialization.PublicFormat.SubjectPublicKeyInfo
         )
-        print(private_pem, public_pem)
+        #print(private_pem, public_pem)
         return private_pem, public_pem
     
     def __init__(self):
