@@ -2,6 +2,10 @@ import socket
 import select
 import errno
 import sys
+from encryption2 import Encryption
+
+
+enc = Encryption()
 
 HEADER_LENGTH = 10
 
