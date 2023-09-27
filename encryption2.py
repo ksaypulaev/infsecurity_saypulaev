@@ -29,6 +29,7 @@ class Encryption:
         return private_pem, public_pem
     
     def __init__(self):
+        #key = Fernet.generate_key()
         self.key = b'LYCLog-4JekRS3ssP4OVNT104eIRwiEDBMMrdjv4mg0='
         self.fernet_key = Fernet(self.key)
         self.public_key_another = None
