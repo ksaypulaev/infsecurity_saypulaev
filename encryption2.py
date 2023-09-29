@@ -29,11 +29,15 @@ class Encryption:
         return private_pem, public_pem
     
     def __init__(self):
-        #key = Fernet.generate_key()
         self.key = b'LYCLog-4JekRS3ssP4OVNT104eIRwiEDBMMrdjv4mg0='
         self.fernet_key = Fernet(self.key)
         self.public_key_another = None
         self.key_pair_gen()
+
+    # Генерация симметричного
+    def key_gen(self):
+        key_generated = Fernet.generate_key()
+        self.fernet_key = Fernet(self.key_generated)
 
     # Симметричное шифрование - дешифрование
     def symm_encrypt(self, message: bytes) -> bytes:
@@ -41,6 +45,9 @@ class Encryption:
     def symm_decrypt(self, ciphertext: bytes) -> bytes:
         return self.fernet_key.decrypt(ciphertext)
     
+
+
+
 
 
     def do_asym_encrypt(self, message: bytes, public_key: PublicKey) -> bytes:
