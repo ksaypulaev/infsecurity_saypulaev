@@ -14,7 +14,6 @@ class Encryption:
     # Генерация симметричного ключа
     def key_gen(self):
         key_generated = Fernet.generate_key()
-        fernet_key = Fernet(key_generated)
         #print(key_generated)
         with open(self.path, "w") as file:
             file.write(key_generated.decode())
@@ -23,7 +22,7 @@ class Encryption:
         with open(self.path, "r") as file:
             text = file.read().encode('utf-8')
         fernet_key = Fernet(text)
-        print(text)
+        #print(text)
         return fernet_key
 
     # Симметричное шифрование - дешифрование
@@ -32,7 +31,7 @@ class Encryption:
     def symm_decrypt(self, ciphertext: bytes) -> bytes:
         return self.key_read().decrypt(ciphertext)
     
-        # Генерация пары ключей
+    # Генерация пары ключей
     def key_pair_gen(self):
         private_key = rsa.generate_private_key(
             public_exponent=65537,
