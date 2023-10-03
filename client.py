@@ -21,6 +21,7 @@ client_socket.send(username_header + username)
 while True:
     message = input(f'{my_username} > ')
     if message:
+        enc.key_gen()
         enc_message = enc.symm_encrypt(message.encode('utf-8'))
         message_header = f"{len(enc_message):<{HEADER_LENGTH}}".encode('utf-8')
         client_socket.send(message_header + enc_message)
