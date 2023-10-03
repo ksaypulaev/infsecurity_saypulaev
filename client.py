@@ -2,7 +2,7 @@ import socket
 import select
 import errno
 import sys
-from encryption2 import Encryption
+from encryption import Encryption
 
 
 enc = Encryption()
