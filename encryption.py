@@ -11,13 +11,14 @@ class Encryption:
         #self.key = b'LYCLog-4JekRS3ssP4OVNT104eIRwiEDBMMrdjv4mg0='
         self.path = "/Users/ksaypulaev/Desktop/Инф безопасность/КДЗ/keys/key.pem"
     
-    # Генерация симметричного ключа
+    # Генерация ключа и запись в файл
     def key_gen(self):
         key_generated = Fernet.generate_key()
         #print(key_generated)
         with open(self.path, "w") as file:
             file.write(key_generated.decode())
     
+    # Чтение ключа из файла
     def key_read(self):
         with open(self.path, "r") as file:
             text = file.read().encode('utf-8')
