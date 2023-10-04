@@ -1,9 +1,9 @@
+import os
 from cryptography.fernet import Fernet
 import rsa
 from rsa import PrivateKey, PublicKey
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
-import os
 
 
 class Encryption:
