@@ -3,6 +3,7 @@ import rsa
 from rsa import PrivateKey, PublicKey
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
+import os
 
 
 class Encryption:
@@ -13,10 +14,12 @@ class Encryption:
     
     # Генерация ключа и запись в файл
     def key_gen(self):
-        key_generated = Fernet.generate_key()
-        #print(key_generated)
-        with open(self.path, "w") as file:
-            file.write(key_generated.decode())
+        if os.path.exists(self.path):
+            if os.path.isfile(self.path):
+                key_generated = Fernet.generate_key()
+                #print(key_generated)
+                with open(self.path, "w") as file:
+                    file.write(key_generated.decode())
     
     # Чтение ключа из файла
     def key_read(self):
