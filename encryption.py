@@ -22,7 +22,7 @@ class Encryption:
                 #print(key_generated)
                 with open(self.pathh, "w") as file:
                     file.write(key_generated.decode())
-    
+
     # Чтение ключа из файла
     def key_read(self):
         with open(self.pathh, "r") as file:
