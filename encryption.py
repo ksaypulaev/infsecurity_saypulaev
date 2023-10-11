@@ -37,7 +37,7 @@ class Encryption:
     def symm_decrypt(self, ciphertext: bytes) -> bytes:
         return self.key_read().decrypt(ciphertext)
     
-    # Генерация пары ключей
+    # Генерация пары ассиметричных ключей
     def key_pair_gen(self):
         private_key = rsa.generate_private_key(
             public_exponent=65537,
