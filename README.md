@@ -1,7 +1,7 @@
 # Шифрование сообщений
 
 [Ссылка на профиль](https://github.com/ksaypulaev "https://github.com/ksaypulaev")\
-[https://github.com/ksaypulaev/infsecurity_saypulaev](https://github.com/ksaypulaev/infsecurity_saypulaev "https://github.com/ksaypulaev/infsecurity_saypulaev")
+[Ссылка на репозиторий](https://github.com/ksaypulaev/infsecurity_saypulaev "https://github.com/ksaypulaev/infsecurity_saypulaev")
 ### Table of contents:
 1. test.py - тестовый файл.
 2. Server.py - сервер.
